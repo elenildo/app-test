@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/style.css">
+    <script src="static/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <div class="banner">
+        <div>
+            Novo usuário
+        </div>
+    </div>
+    <div style="width:500px; border:1px solid #888; margin:0 auto; padding: 10px; ">
+        <form action="" id="frmLogin">
+            <label for="">Name:</label>
+            <input type="text" name="name"><br><br>
+            <label for="">E-mail:</label>
+            <input type="email" name="email"><br><br>
+            <label for="">Password:</label>
+            <input type="password" name="password"><br><br>
+            <hr>
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+
+    <script>
+        
+        $("#frmLogin").submit(function(e) {
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+            var form = $(this);
+            $.ajax({
+                type: "POST",
+                url: 'http://login.test/api/register',
+                data: form.serialize(), // serializes the form's elements.
+                success: function(data){
+                    window.location.href='login.html';
+                },
+                error: function(data){
+                    $('#error').html(data.responseJSON.error);
+                }
+            });
+        });
+        
+    </script>
+</body>
+</html>

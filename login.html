@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/style.css">
+    <script src="static/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <div class="banner">
+        <div>
+            Login
+        </div>
+    </div>
+    <div style="width:500px; border:1px solid #888; margin:0 auto; padding: 10px; ">
+        <form id="frmLogin">
+            <label for="">E-mail:</label>
+            <input type="email" name="email"> &nbsp; 
+            <span id="error" style="color:red;"></span> <br><br>
+            <label for="">Password:</label>
+            <input type="password" name="password">
+            <hr>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+
+    <script>
+
+        $('#frmLogin').submit(function(evt){
+            evt.preventDefault();
+            var form = $(this);
+            $.ajax({
+                url: 'http://login.test/api/login',
+                type: 'POST',
+                data: form.serialize(),
+                success: function(data){
+                    window.localStorage.setItem('access_token',data.token);
+                    window.localStorage.setItem('username',data.username);
+                    window.location.href='index.html';
+                },
+                error: function(data){
+                    window.localStorage.setItem('username','');
+                    $('#error').html(data.responseJSON.error);
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

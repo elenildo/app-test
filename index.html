@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/style.css">
+    <script src="static/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <div class="banner">
+        <div>
+            Início
+            <button id="logout">Sair</button>
+            <span class="panel-login"></span>
+        </div>
+    </div>
+    <div class="container">
+        <h3></h3>
+        <a href="cadastro.html">Cadastro de Usuários</a> |
+        <a href="produto.html">Cadastro de Produtos</a> |
+        <a href="produtos.html">Lista de Produtos</a>
+    </div>
+   
+    <script src="static/app.js"></script> 
+    <script>
+
+        var token = window.localStorage.getItem('access_token');
+        var user = window.localStorage.getItem('username');
+        
+        if(user != ''){
+            $('.panel-login').html('Bem-vindo , '+ user);
+            $('#login').show();
+        }else
+            $('#login').hide();
+
+        $.ajax({
+            url: 'http://login.test/api/user',
+            headers: {
+                'Authorization': 'Bearer '+token,
+            },
+            type: 'GET',
+            success: function(data){
+            },
+            error: function(){
+                alert('Não autorizado. Redirecionando...');
+                window.localStorage.setItem('username','');
+                window.location.href='login.html';
+            }
+        });
+    </script>
+</body>
+</html>

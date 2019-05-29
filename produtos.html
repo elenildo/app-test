@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/style.css">
+    <script src="static/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <div class="banner">
+        <div>
+            Todos os Produtos
+            <button id="logout">Sair</button>
+            <span class="panel-login"></span>
+        </div>
+    </div>
+    <div class="container">
+        <table id="table">
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="static/app.js"></script> 
+    <script>
+
+        var token = window.localStorage.getItem('access_token');
+        var user = window.localStorage.getItem('username');
+        
+        if(user != ''){
+            $('.panel-login').html('Bem-vindo , '+ user);
+            $('#login').show();
+        }else
+            $('#login').hide();
+        
+        $.ajax({
+            url: 'http://login.test/api/products',
+            headers:{
+                "Authorization": "Bearer "+ token,
+            },
+            type: "GET",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data){
+                var table = $("#table tbody");
+                $.each(data.data, function(idx, elem){
+                    table.append("<tr><td>"+elem.id+"</td><td><a href='detalhe_produto.html?id=" + elem.id + "'>"+elem.name+"</a></td>   <td>"+elem.price+"</td></tr>");
+                });
+            },
+            error: function(){
+                alert('Não autorizado. Redirecionando...');
+                window.localStorage.setItem('username','');
+                window.location.href='login.html';
+            }
+        });
+
+    </script>
+</body>
+</html>

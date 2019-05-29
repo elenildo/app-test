@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/style.css">
+    <script src="static/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <div class="banner">
+        <div>
+            Cadastro de Produtos
+            <button id="logout">Sair</button>
+            <span class="panel-login"></span>
+        </div>
+    </div>
+    <div style="width:500px; border:1px solid #888; margin:0 auto; padding: 10px; ">
+        <form action="" method="POST" id="frmProduct" enctype="multipart/form-data">
+            <label for="">Name:</label>
+            <input type="text" name="name"><br><br>
+            <label for="">Price:</label>
+            <input type="text" name="price"><br><br>
+            <input type="file" name="image" id="file">
+            <hr>
+            <button>Submit</button>
+        </form>
+    </div>
+    
+    <script src="static/app.js"></script> 
+
+    <script>
+
+        var token = window.localStorage.getItem('access_token');
+        var user = window.localStorage.getItem('username');
+        
+        if(user != ''){
+            $('.panel-login').html('Bem-vindo , '+ user);
+            $('#login').show();
+        }else
+            $('#login').hide();
+        
+        $.ajax({
+            url: 'http://login.test/api/products/create',
+            headers:{
+                "Authorization": "Bearer "+ token,
+            },
+            type: "GET",
+            contentType: "application/json",
+            dataType: "json",
+            error: function(){
+                alert('Não autorizado. Redirecionando...');
+                window.localStorage.setItem('username','');
+                window.location.href='login.html';
+            }
+        });
+
+        $("#frmProduct").submit(function(e) {
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+            var form = new FormData(this);
+            form.append('image', e.target.file[0]); // para apenas 1 arquivo
+
+            $.ajax({
+                type: "POST",
+                headers:{
+                    "Authorization": "Bearer "+ token,
+                },
+                url: 'http://login.test/api/products',
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function (data){
+                    window.location.href='produtos.html';
+                }
+            });
+        });
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/style.css">
+    <script src="static/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <div class="banner">
+        <div>
+            Detalhe do Produto
+            <button id="logout">Sair</button>
+            <span class="panel-login"></span>
+        </div>
+    </div>
+    <div class="container">
+       <span id="produto"></span><br>
+       <span id="preco"></span><br>
+       <img src="" alt="" download>
+    </div>
+
+    <script src="static/app.js"></script> 
+
+    <script>
+
+        var token = window.localStorage.getItem('access_token');
+        var user = window.localStorage.getItem('username');
+        
+        if(user != '') $('.panel-login').html('Bem-vindo , '+ user);
+
+        $.urlParam = function(name){
+	        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	        return results[1] || 0;
+        }
+
+        $.ajax({
+            type: "GET",
+            headers:{
+                "Authorization": "Bearer "+ token,
+            },
+            url: 'http://login.test/api/products/'+ $.urlParam('id'),
+            success: function (data){
+                $('#produto').html(data.data.name);
+                $('#preco').html('R$ '+data.data.price);
+                $('img').attr('src', 'http://login.test/'+data.data.image);
+            },
+            error: function(){
+                alert('Não autorizado. Redirecionando...');
+                window.localStorage.setItem('username','');
+                window.location.href='login.html';
+            }
+        });
+       
+    </script>
+</body>
+</html>
