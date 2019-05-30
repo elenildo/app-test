@@ -1,6 +1,13 @@
 body{
     margin: 0;
     padding: 0;
+    background-color: #f0f0f0;
+}
+.painel-form{
+    width:500px; 
+    border:1px solid #bbb; 
+    margin:0 auto; 
+    padding: 10px;
 }
 .container{
     width: 80%;
@@ -14,6 +21,7 @@ body{
     border-bottom: 1px solid #ccc;
     margin-bottom: 20px;
     padding-top: 10px;
+    background-color: #e0e0e0;
 }
 .banner div{
     width: 80%;
