@@ -36,7 +36,7 @@
             $('#login').hide();
 
         $.ajax({
-            url: 'http://login.test/api/user',
+            url: DOMINIO + 'user',
             headers: {
                 'Authorization': 'Bearer '+token,
             },

@@ -27,6 +27,7 @@
         </form>
     </div>
 
+    <script src="static/app.js"></script>
     <script>
         
         $("#frmLogin").submit(function(e) {
@@ -34,7 +35,7 @@
             var form = $(this);
             $.ajax({
                 type: "POST",
-                url: 'http://login.test/api/register',
+                url: DOMINIO + 'register',
                 data: form.serialize(), // serializes the form's elements.
                 success: function(data){
                     window.location.href='login.html';

@@ -35,7 +35,7 @@
             $('#login').hide();
         
         $.ajax({
-            url: 'http://login.test/api/products',
+            url: DOMINIO + 'products',
             headers:{
                 "Authorization": "Bearer "+ token,
             },

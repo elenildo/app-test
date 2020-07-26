@@ -30,7 +30,6 @@
     </div>
     
     <script src="static/app.js"></script> 
-
     <script>
 
         var token = window.localStorage.getItem('access_token');
@@ -43,14 +42,14 @@
             $('#login').hide();
         
         $.ajax({
-            url: 'http://login.test/api/products/create',
-            headers:{
+            url: DOMINIO + 'products/create',
+            headers: {
                 "Authorization": "Bearer "+ token,
             },
             type: "GET",
-            contentType: "application/json",
-            dataType: "json",
-            error: function(){
+            success: function(data){
+            },
+            error: function(data){
                 alert('Não autorizado. Redirecionando...');
                 window.localStorage.setItem('username','');
                 window.location.href='login.html';
@@ -67,7 +66,7 @@
                 headers:{
                     "Authorization": "Bearer "+ token,
                 },
-                url: 'http://login.test/api/products',
+                url: 'http://localhost:8000/api/products',
                 data: form,
                 processData: false,
                 contentType: false,

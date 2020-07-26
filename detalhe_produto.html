@@ -23,7 +23,6 @@
     </div>
 
     <script src="static/app.js"></script> 
-
     <script>
 
         var token = window.localStorage.getItem('access_token');
@@ -41,11 +40,11 @@
             headers:{
                 "Authorization": "Bearer "+ token,
             },
-            url: 'http://login.test/api/products/'+ $.urlParam('id'),
+            url: DOMINIO + 'products/'+ $.urlParam('id'),
             success: function (data){
                 $('#produto').html(data.data.name);
                 $('#preco').html('R$ '+data.data.price);
-                $('img').attr('src', 'http://login.test/'+data.data.image);
+                $('img').attr('src', 'http://localhost:8000/'+data.data.image);
             },
             error: function(){
                 alert('Não autorizado. Redirecionando...');

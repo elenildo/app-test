@@ -26,13 +26,14 @@
         </form>
     </div>
 
+    <script src="static/app.js"></script> 
     <script>
 
         $('#frmLogin').submit(function(evt){
             evt.preventDefault();
             var form = $(this);
             $.ajax({
-                url: 'http://login.test/api/login',
+                url: DOMINIO +'login',
                 type: 'POST',
                 data: form.serialize(),
                 success: function(data){

@@ -1,7 +1,9 @@
+const DOMINIO = 'http://localhost:8000/api/'
+
 $("#logout").click(function(){
     $.ajax({
         type: "GET",
-        url: 'http://login.test/api/logout',
+        url: 'http://localhost:8000/api/logout',
         headers:{
         "Authorization": "Bearer "+ token,
         },
